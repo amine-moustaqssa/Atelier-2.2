@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Authors!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    {% if Authorslist is defined and Authorslist is not empty %}
+        <table border="1">
+            <tr>
+                <th>Id</th>
+                <th>Picture</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Nb_books</th>
+            </tr>
+            {% for author in Authorslist %}
+                <tr>
+                    <td>{{ author.id }}</td>
+                    <td><img src="{{ author.picture }}" alt="img non dispo"></td>
+                    <td>{{ author.username | upper}}</td>
+                    <td>{{ author.email }}</td>
+                    <td>{{ author.nb_books }}</td>
+                    <td><a href="{{ path('app_authorDetails',{'id':author.id}) }}">Detalis</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <h1>Tableau Vide</h1>
+    {% endif %}
+    <h1>Le nombre des auteurs est {{Authorslist | length}}</h1>
+    {% set nbrTotLivres = 0%}
+    {%for a in Authorslist%}
+    {%set nbrTotLivres=nbrTotLivres+a.nb_books%}
+    {% endfor %}
+    <h1>Le nombre total des livres = {{nbrTotLivres}}</h1>
+
+</div>
+{% endblock %}
